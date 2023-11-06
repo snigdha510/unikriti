@@ -1,0 +1,121 @@
+/* Reset some default browser styles */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Set a background color and font for the entire page */
+body {
+    background-color: #f2f2f2;
+    font-family: Arial, sans-serif;
+}
+
+/* Header styles */
+header {
+    background-color: #fff;
+    border-bottom: 1px solid #e1e1e1;
+    padding: 20px 0;
+}
+
+
+#app canvas {
+    max-width: 100%; /* Make sure the canvas doesn't exceed the container width */
+    max-height: 100%; /* Make sure the canvas doesn't exceed the container height */
+}
+
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav li {
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Main content container */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    padding: 20px;
+}
+
+/* Left section (3D T-shirt canvas) */
+.left-section {
+    width: 50%;
+    padding: 20px;
+    background-color: white; /* Set the background color to white */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    text-align: center; /* Center text */
+    overflow: hidden; /* Hide overflow content */
+    position: relative; /* Set the position to relative */
+}
+
+
+/* Right section (Product name, description, and color options) */
+.right-section {
+    width: 50%; /* Distribute equally with left section */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.right-section h2 {
+    font-size: 20px;
+}
+
+.color-options {
+    margin-top: 20px;
+}
+
+/* Style for the color circles in the right section */
+.color-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    border: 1px solid #333; /* Add a border to differentiate colors */
+}
+
+/* Style each color circle individually */
+.red {
+    background-color: #ff0000; /* Red color */
+}
+
+.blue {
+    background-color: #0000ff; /* Blue color */
+}
+
+.green {
+    background-color: #00ff00; /* Green color */
+}
+
+/* Add more color circles as needed */

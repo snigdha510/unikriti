@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>T-Shirt 360</title>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>T-Shirt 360</h1>
+            <nav>
+                <ul>
+                    <li><a href="#">Women</a></li>
+                    <li><a href="#">Men</a></li>
+                    <li><a href="#">Lifestyle</a></li>
+                    <li><a href="#">Home Decor</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="left-section">
+            <div id="app-container"> <!-- Added a container div -->
+                <div id="app">
+                </div> <!-- The canvas remains inside this div -->
+            </div>
+            <!-- Removed input elements for controlling scale and rotation -->
+            <input type="color" id="color-picker" value="#ff0000">
+        </div>
+        <div class="right-section">
+            <h2>Product Name</h2>
+            <p>Product description goes here.</p>
+            <div class="color-options">
+                <label for="color">Select Color:</label>
+                <div class="color-circle red"></div>
+                <div class="color-circle blue"></div>
+                <div class="color-circle green"></div>
+                <!-- Add more color circles as needed -->
+            </div>
+        </div>
+    </main>
+    <footer>
+        &copy; 2023 T-Shirt 360. All rights reserved.
+    </footer>
+    <script type="module" src="./node_modules/three/build/three.module.js"></script>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

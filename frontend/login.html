@@ -1,0 +1,26 @@
+<!-- frontend/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./login.css">
+    <title>Tshirt 360 - Login</title>
+</head>
+<body class="login-background">
+    <div class="login-container">
+        <h1>Tshirt 360</h1>
+        <h2>Login</h2>
+        <form id="login-form">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p>New here? <a href="signup.html">Create your account</a></p>
+        <p>Or login from Google</p>
+    </div>
+    <!-- Add the 'app' container -->
+    <div id="app"></div>
+    <script type="module" src="./login.js"></script>
+</body>
+</html>
