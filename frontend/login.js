@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
         // Send a request to the backend for authentication
         try {
-            const response = await fetch('/api/login', {
+            const response = await fetch('http://localhost:3000/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -18,7 +18,9 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now, // Store the creation date
     },
-    preferences: { type: Object } 
+    preferences: { 
+        type: Object 
+    } 
 });
 
 // Create the User model
