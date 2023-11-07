@@ -6,8 +6,8 @@ body, h1, h2, h3, p, ul, li {
 
 /* Set a background color and font for the entire page */
 body {
-    background-color: #f2f2f2;
-    font-family: Arial, sans-serif;
+    background-color: #f8f8f8; /* Updated background color */
+    font-family: 'Helvetica Neue', sans-serif; /* Updated font family */
 }
 
 /* Header styles */
@@ -15,14 +15,22 @@ header {
     background-color: #fff;
     border-bottom: 1px solid #e1e1e1;
     padding: 20px 0;
+    text-align: center; /* Center the header content */
 }
 
+header h1 {
+    font-family: 'Arial', sans-serif; /* Updated font family */
+    color: #ff5733; /* Updated text color */
+    font-size: 36px; /* Adjust the font size as needed */
+    text-transform: uppercase; /* Optionally make the text uppercase */
+    letter-spacing: 2px; /* Optionally adjust letter spacing */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Optionally add a text shadow for better visibility */
+}
 
 #app canvas {
     max-width: 100%; /* Make sure the canvas doesn't exceed the container width */
     max-height: 100%; /* Make sure the canvas doesn't exceed the container height */
 }
-
 
 .header-content {
     display: flex;
@@ -31,11 +39,6 @@ header {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
-}
-
-header h1 {
-    font-size: 24px;
-    color: #333;
 }
 
 nav ul {
@@ -66,7 +69,7 @@ main {
 .left-section {
     width: 50%;
     padding: 20px;
-    background-color: white; /* Set the background color to white */
+    background-color: #fff; /* Updated background color */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
@@ -77,17 +80,26 @@ main {
     position: relative; /* Set the position to relative */
 }
 
-
 /* Right section (Product name, description, and color options) */
 .right-section {
-    width: 50%; /* Distribute equally with left section */
+    width: 50%;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .right-section h2 {
-    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif; /* Change the font family to Times New Roman */
+    font-size: 24px; /* Updated font size */
+    color: #333; /* Updated text color */
+    text-transform: uppercase; /* Optionally make the text uppercase */
+    letter-spacing: 1px; /* Optionally adjust letter spacing */
+}
+
+right-section p {
+    font-size: 16px; /* Updated font size */
+    color: #555; /* Updated text color */
+    margin-top: 10px;
 }
 
 .color-options {
@@ -96,13 +108,14 @@ main {
 
 /* Style for the color circles in the right section */
 .color-circle {
-    width: 30px;
-    height: 30px;
+    width: 40px; /* Updated size for color circles */
+    height: 40px; /* Updated size for color circles */
     border-radius: 50%;
     margin: 5px;
     cursor: pointer;
     transition: transform 0.2s ease;
-    border: 1px solid #333; /* Add a border to differentiate colors */
+    border: 2px solid #fff; /* Added white border to differentiate colors */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow for a button-like effect */
 }
 
 /* Style each color circle individually */
@@ -111,11 +124,11 @@ main {
 }
 
 .blue {
-    background-color: #0000ff; /* Blue color */
+    background-color: #007bff; /* Updated blue color */
 }
 
-.green {
-    background-color: #00ff00; /* Green color */
+green {
+    background-color: #28a745; /* Updated green color */
 }
 
 /* Add more color circles as needed */

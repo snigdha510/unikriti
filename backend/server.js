@@ -1,19 +1,19 @@
+// backend/server.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
+const http = require('http'); 
+const socketIo = require('socket.io');
 const app = express();
 const port = 3000;
-const cors = require('cors');
 
-// WebSocket imports
-const http = require('http');
-const server = http.createServer(app);
-const io = require('socket.io')(server);
+const cors = require('cors');
 
 // Allow all CORS requests (for development, can be more restrictive in production)
 app.use(cors());
+
 
 // Require the User model (adjust the path as needed)
 const User = require('./models/user.js');
@@ -21,10 +21,9 @@ const User = require('./models/user.js');
 app.use(bodyParser.json());
 
 // Define a secret key for JWT (replace with your own secret)
-const secretKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTkyODUyNjcsImV4cCI6MTY5OTI4ODg2N30.EI7RzNSBVSG-Inu2IQqa1RuCTwFqh44SyaRFmIeWaQI';
-
+const secretKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTkyODUyNjcsImV4cCI6MTY5OTI4ODg2N30.EI7RzNSBVSG-Inu2IQqa1RuCTwFqh44SyaRFmIeWaQI'
 // Connect to MongoDB (replace with your MongoDB URI)
-mongoose.connect('mongodb+srv://sparashar5102001:snigdha510@cluster0.eyocizc.mongodb.net/tshirt', {
+mongoose.connect('mongodb+srv://sparashar5102001:snigdha510@cluster0.eyocizc.mongodb.net/tshirt?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
@@ -36,22 +35,20 @@ db.once('open', () => {
     console.log('Connected to MongoDB');
 });
 
-// WebSocket event handling
-io.on('connection', (socket) => {
-    console.log('A user connected.');
+// Define a function to check user credentials
+async function checkUserCredentials(email, password) {
+    try {
+        const user = await User.findOne({ email });
 
-    socket.on('colorPreference', (data) => {
-        // Handle the color preference data received from the client
-        console.log('Received color preference:', data);
+        if (user && bcrypt.compareSync(password, user.password)) {
+            return user;
+        }
+    } catch (error) {
+        console.error(error);
+    }
 
-        // You can save this data to your database or perform any other desired actions.
-        // Modify the code as needed to save the color preference to your database.
-    });
-
-    socket.on('disconnect', () => {
-        console.log('A user disconnected.');
-    });
-});
+    return null;
+}
 
 // Middleware to authenticate the JWT token
 function authenticateToken(req, res, next) {
@@ -67,24 +64,27 @@ function authenticateToken(req, res, next) {
 
 // Add this route to your backend/server.js
 app.post('/api/preferences', authenticateToken, async (req, res) => {
-    const userEmail = req.user.email;
-    const colorPreference = req.body.colorPreference;
-
-    try {
-        // Update the user's preferences in the database (assuming you have a User model)
-        const user = await User.findOne({ email: userEmail });
-        if (user) {
-            user.colorPreference = colorPreference;
-            await user.save();
-            res.status(200).json({ message: 'User preferences saved successfully' });
-        } else {
-            res.status(404).json({ error: 'User not found' });
+        const userEmail = req.user.email; // User's email from the JWT token
+        const preferences= req.body.preferences; // User's color preference
+    
+        try {
+            // Update the user's preferences in the database (assuming you have a User model)
+            const user = await User.findOne({ email: userEmail });
+    
+            if (user) {
+                user.preferences = preferences; // Assuming you have a 'preferences' field in your User model
+                await user.save();
+                res.status(200).json({ message: 'User preferences saved successfully' });
+            } else {
+                res.status(404).json({ error: 'User not found' });
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Failed to save user preferences' });
         }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Failed to save user preferences' });
-    }
-});
+    });
+    
+
 
 // Protected route (requires a valid JWT token)
 app.get('/api/protected', authenticateToken, (req, res) => {
@@ -127,9 +127,29 @@ app.post('/api/register', (req, res) => {
         });
 });
 
-server.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+const server = http.createServer(app); // Create an HTTP server
+const io = socketIo(server); // Create a Socket.io instance and attach it to the server
+
+
+
+// Handle WebSocket connections
+io.on('connection', (socket) => {
+    console.log('A user connected.');
+
+    // Handle user preference updates via WebSocket
+    socket.on('updatePreference', async (data) => {
+        // Update the MongoDB database with the new preference
+        await User.updateOne({ email: data.email }, { preferences: data.colorPreference });
+
+        // Broadcast the updated data to all clients, including the user who made the update
+        io.emit('preferenceUpdated', data);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('A user disconnected.');
+    });
 });
 
-
-
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
